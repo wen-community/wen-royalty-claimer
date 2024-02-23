@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 
 import { AccountBalanceWalletOutlined } from "@mui/icons-material";
 import { Button, Stack, Theme, Typography } from "@mui/material";

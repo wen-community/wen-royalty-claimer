@@ -1,6 +1,6 @@
 import { Column, Image } from "../common";
 import { HERO_LOGO } from "../../constants";
-import { Button, Input, Link, Stack, Typography } from "@mui/material";
+import { Button, Input, Stack, Typography } from "@mui/material";
 import { useHomeScrollContext } from "../../contexts";
 import { buildClaimDistributionIx, fetchEligibleDistributionForUser, shakeAnimation, useProvider } from "../../util";
 import { useState } from "react";
