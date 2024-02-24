@@ -3,8 +3,8 @@ import { PublicKey } from "@solana/web3.js";
 import { DISTRIBUTION_PROGRAM_ID, WNS_PROGRAM_ID } from "../../constants";
 import { Idl, Program, Provider } from "@coral-xyz/anchor";
 import { WenDistribution, WenStandard, distributionIdl, standardIdl } from "./idl";
-import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, getMint } from "@solana/spl-token";
-import { WnsToken, getGroupMemberPointerState, getGroupPointerState, getMetadataState } from "./extensions";
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, getGroupMemberPointerState, getGroupPointerState, getMint } from "@solana/spl-token";
+import { WnsToken, getMetadataState } from "./extensions";
 
 export const getProgramAddress = (seeds: Array<Buffer | Uint8Array>, programId: PublicKey) => {
     const [key] = PublicKey.findProgramAddressSync(seeds, programId);

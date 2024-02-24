@@ -11,7 +11,7 @@
     "@mui/material": "^5.15.5",
     "@solana/buffer-layout": "^4.0.1",
     "@solana/buffer-layout-utils": "^0.2.0",
-    "@solana/spl-token": "^0.4.0",
+    "@solana/spl-token": "^0.4.1",
     "@solana/spl-token-metadata": "^0.1.2",
     "@solana/wallet-adapter-backpack": "^0.1.14",
     "@solana/wallet-adapter-phantom": "^0.9.24",
