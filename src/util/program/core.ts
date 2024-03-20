@@ -74,8 +74,8 @@ export const getDistributionProgram = (provider: Provider) => {
     ) as unknown as Program<WenDistribution>;
 }
 
-export const getDistributionAccount = (collection: string) => {
-    const [distributionAccount] = PublicKey.findProgramAddressSync([new PublicKey(collection).toBuffer()], DISTRIBUTION_PROGRAM_ID);
+export const getDistributionAccount = (collection: string, paymentMint: string) => {
+    const [distributionAccount] = PublicKey.findProgramAddressSync([new PublicKey(collection).toBuffer(), new PublicKey(paymentMint).toBuffer()], DISTRIBUTION_PROGRAM_ID);
 
     return distributionAccount;
 }

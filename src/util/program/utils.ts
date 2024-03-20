@@ -42,7 +42,7 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
 
 export const fetchDistributionAccount = async (provider: Provider, collection: string) => {
     const distributionProgram = getDistributionProgram(provider);
-    const distributionAddress = getDistributionAccount(collection);
+    const distributionAddress = getDistributionAccount(collection, PublicKey.default.toString());
 
     const distributionAccount = await distributionProgram.account.distributionAccount.fetch(distributionAddress);
     
