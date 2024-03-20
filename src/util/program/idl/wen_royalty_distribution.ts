@@ -1,5 +1,5 @@
 export type WenRoyaltyDistribution = {
-  "version": "0.0.1-alpha",
+  "version": "0.2.0-alpha",
   "name": "wen_royalty_distribution",
   "instructions": [
     {
@@ -14,17 +14,12 @@ export type WenRoyaltyDistribution = {
           "isSigner": true
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "mint",
+          "name": "groupMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "distribution",
+          "name": "distributionAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -34,7 +29,12 @@ export type WenRoyaltyDistribution = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "paymentMint",
+          "type": "publicKey"
+        }
+      ]
     },
     {
       "name": "updateDistribution",
@@ -42,11 +42,6 @@ export type WenRoyaltyDistribution = {
         "Update royalty amount for creators a distribution account."
       ],
       "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
         {
           "name": "authority",
           "isMut": true,
@@ -58,17 +53,17 @@ export type WenRoyaltyDistribution = {
           "isSigner": false
         },
         {
-          "name": "distribution",
+          "name": "distributionAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "distributionAddress",
+          "name": "authorityTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "payerAddress",
+          "name": "distributionTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -104,11 +99,6 @@ export type WenRoyaltyDistribution = {
       ],
       "accounts": [
         {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
           "name": "creator",
           "isMut": true,
           "isSigner": true
@@ -119,12 +109,12 @@ export type WenRoyaltyDistribution = {
           "isSigner": false
         },
         {
-          "name": "distributionAddress",
+          "name": "distributionTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "payerAddress",
+          "name": "creatorTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -149,15 +139,28 @@ export type WenRoyaltyDistribution = {
         "kind": "struct",
         "fields": [
           {
-            "name": "collection",
+            "name": "version",
+            "docs": [
+              "distribution version"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "groupMint",
+            "docs": [
+              "group to which the distribution account belongs to"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "authority",
+            "name": "paymentMint",
+            "docs": [
+              "payment mint for the distribution account"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "data",
+            "name": "claimData",
             "type": {
               "vec": {
                 "defined": "Creator"
@@ -176,10 +179,16 @@ export type WenRoyaltyDistribution = {
         "fields": [
           {
             "name": "address",
+            "docs": [
+              "creator address"
+            ],
             "type": "publicKey"
           },
           {
             "name": "pct",
+            "docs": [
+              "creator share percentage"
+            ],
             "type": "u8"
           }
         ]
@@ -208,10 +217,16 @@ export type WenRoyaltyDistribution = {
         "fields": [
           {
             "name": "address",
+            "docs": [
+              "creator address"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "amount",
+            "name": "claimAmount",
+            "docs": [
+              "token amount that creator can claim"
+            ],
             "type": "u64"
           }
         ]
@@ -228,12 +243,17 @@ export type WenRoyaltyDistribution = {
       "code": 6001,
       "name": "InvalidCreatorPctAmount",
       "msg": "Invalid creator pct amount. Must add up to 100"
+    },
+    {
+      "code": 6002,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow"
     }
   ]
 };
 
 export const IDL: WenRoyaltyDistribution = {
-  "version": "0.0.1-alpha",
+  "version": "0.2.0-alpha",
   "name": "wen_royalty_distribution",
   "instructions": [
     {
@@ -248,17 +268,12 @@ export const IDL: WenRoyaltyDistribution = {
           "isSigner": true
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "mint",
+          "name": "groupMint",
           "isMut": false,
           "isSigner": false
         },
         {
-          "name": "distribution",
+          "name": "distributionAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -268,7 +283,12 @@ export const IDL: WenRoyaltyDistribution = {
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "paymentMint",
+          "type": "publicKey"
+        }
+      ]
     },
     {
       "name": "updateDistribution",
@@ -276,11 +296,6 @@ export const IDL: WenRoyaltyDistribution = {
         "Update royalty amount for creators a distribution account."
       ],
       "accounts": [
-        {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
         {
           "name": "authority",
           "isMut": true,
@@ -292,17 +307,17 @@ export const IDL: WenRoyaltyDistribution = {
           "isSigner": false
         },
         {
-          "name": "distribution",
+          "name": "distributionAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "distributionAddress",
+          "name": "authorityTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "payerAddress",
+          "name": "distributionTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -338,11 +353,6 @@ export const IDL: WenRoyaltyDistribution = {
       ],
       "accounts": [
         {
-          "name": "payer",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
           "name": "creator",
           "isMut": true,
           "isSigner": true
@@ -353,12 +363,12 @@ export const IDL: WenRoyaltyDistribution = {
           "isSigner": false
         },
         {
-          "name": "distributionAddress",
+          "name": "distributionTokenAccount",
           "isMut": true,
           "isSigner": false
         },
         {
-          "name": "payerAddress",
+          "name": "creatorTokenAccount",
           "isMut": true,
           "isSigner": false
         },
@@ -383,15 +393,28 @@ export const IDL: WenRoyaltyDistribution = {
         "kind": "struct",
         "fields": [
           {
-            "name": "collection",
+            "name": "version",
+            "docs": [
+              "distribution version"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "groupMint",
+            "docs": [
+              "group to which the distribution account belongs to"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "authority",
+            "name": "paymentMint",
+            "docs": [
+              "payment mint for the distribution account"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "data",
+            "name": "claimData",
             "type": {
               "vec": {
                 "defined": "Creator"
@@ -410,10 +433,16 @@ export const IDL: WenRoyaltyDistribution = {
         "fields": [
           {
             "name": "address",
+            "docs": [
+              "creator address"
+            ],
             "type": "publicKey"
           },
           {
             "name": "pct",
+            "docs": [
+              "creator share percentage"
+            ],
             "type": "u8"
           }
         ]
@@ -442,10 +471,16 @@ export const IDL: WenRoyaltyDistribution = {
         "fields": [
           {
             "name": "address",
+            "docs": [
+              "creator address"
+            ],
             "type": "publicKey"
           },
           {
-            "name": "amount",
+            "name": "claimAmount",
+            "docs": [
+              "token amount that creator can claim"
+            ],
             "type": "u64"
           }
         ]
@@ -462,6 +497,11 @@ export const IDL: WenRoyaltyDistribution = {
       "code": 6001,
       "name": "InvalidCreatorPctAmount",
       "msg": "Invalid creator pct amount. Must add up to 100"
+    },
+    {
+      "code": 6002,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow"
     }
   ]
 };
