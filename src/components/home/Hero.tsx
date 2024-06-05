@@ -4,12 +4,13 @@ import { Button, Input, Stack, Typography } from "@mui/material";
 import { useHomeScrollContext } from "../../contexts";
 import { buildClaimDistributionIx, fetchEligibleDistributionForUser, shakeAnimation, useProvider } from "../../util";
 import { useState } from "react";
-import { PublicKey, Transaction } from "@solana/web3.js";
+import { ComputeBudgetProgram, PublicKey, Transaction } from "@solana/web3.js";
 
 export default function Hero() {
   const provider = useProvider();
 
   const [transaction, setTransaction] = useState<string | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [nftMint, setNftMint] = useState<string | undefined>();
   const [distribution, setDistribution] = useState<string | undefined>();
   const [eligibleDistribution, setEligibleDistribution] = useState<number | undefined>();
@@ -29,14 +30,16 @@ export default function Hero() {
   const claimDistribution = async () => {
     if (!distribution || distribution === PublicKey.default.toString() || !provider) return;
     const distributionIx = await buildClaimDistributionIx(provider, distribution);
+    const prioIx = ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 100_000 });
     if (!distributionIx) return;
 
     const txn = new Transaction();
-
+    txn.add(prioIx);
     txn.add(distributionIx);
 
+    setLoading(true);
     const result = await provider.sendAndConfirm(txn, []);
-
+    setLoading(false);
     if (result) {
       setTransaction(result);
     }
@@ -64,6 +67,7 @@ export default function Hero() {
           <Button onClick={claimDistribution}>Claim Royalties</Button>
         </>
       }
+      { loading && <Typography variant="body1">Transaction in progress...</Typography>}
       { transaction !== undefined && <Typography variant="h4">View your <a href={`https://xray.helius.xyz/tx/${transaction}?network=mainnet`} >Transaction</a></Typography>}
     </Column>
   );
