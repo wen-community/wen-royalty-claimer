@@ -21,7 +21,6 @@ export const getATAAddressSync = ({ mint, owner }: { mint: PublicKey; owner: Pub
 export const getWnsProgram = (provider: Provider) => {
     return new Program(
         standardIdl as Idl,
-        WNS_PROGRAM_ID,
         provider
     ) as unknown as Program<WenStandard>;
 }
@@ -69,7 +68,6 @@ export const getWnsToken = async (provider: Provider, mint: string) => {
 export const getDistributionProgram = (provider: Provider) => {
     return new Program(
         distributionIdl as Idl,
-        DISTRIBUTION_PROGRAM_ID,
         provider
     ) as unknown as Program<WenDistribution>;
 }

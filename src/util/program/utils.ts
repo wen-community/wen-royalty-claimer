@@ -2,7 +2,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { getDistributionAccount, getDistributionProgram, getWnsToken } from "./core";
 import { AnchorProvider, BN, Provider } from "@coral-xyz/anchor";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
-import { RPC_URL } from "../../constants";
+import { DISTRIBUTION_PROGRAM_ID, RPC_URL } from "../../constants";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 export const useProvider = () => {
@@ -18,8 +18,8 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
     const distributionProgram = getDistributionProgram(provider);
     const distributionAccount = new PublicKey(distribution);
 
-    const creatorPubkey = provider.publicKey;
-    const mintPubkey = PublicKey.default;
+    const creatorPubkey = DISTRIBUTION_PROGRAM_ID;
+    const mintPubkey = DISTRIBUTION_PROGRAM_ID;
 
     if (!creatorPubkey) return undefined;
 
@@ -27,10 +27,11 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
     let programTokenAccount = distributionAccount;
 
     const ix = await distributionProgram.methods
-        .claimDistribution(mintPubkey)
+        .claimDistribution()
         .accountsStrict({
             creator: creatorPubkey,
             distribution: distributionAccount,
+            paymentMint: mintPubkey,
             creatorTokenAccount: creatorTokenAccount,
             distributionTokenAccount: programTokenAccount,
             tokenProgram: TOKEN_2022_PROGRAM_ID,
