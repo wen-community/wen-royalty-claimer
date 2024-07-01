@@ -18,7 +18,7 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
     const distributionProgram = getDistributionProgram(provider);
     const distributionAccount = new PublicKey(distribution);
 
-    const creatorPubkey = DISTRIBUTION_PROGRAM_ID;
+    const creatorPubkey = provider.publicKey;
     const mintPubkey = DISTRIBUTION_PROGRAM_ID;
 
     if (!creatorPubkey) return undefined;
@@ -60,7 +60,8 @@ export const fetchEligibleDistributionForUser = async (provider: Provider, mint:
         amount: 0
     };
     const { address: distributionAddress, account: distributionAccount } = await fetchDistributionAccount(provider, collection.toString());
-    const creator = provider.publicKey?.toString();
+    // const creator = provider.publicKey?.toString();
+    const creator = "5AdNuK2RfGxKhk7gGQZxN6S4a5LNRUn8Q1ry6fSWg85n";
 
     if (!creator) return {
         distributionAddress,
