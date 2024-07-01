@@ -126,38 +126,6 @@ export type WenRoyaltyDistribution = {
       ]
     },
     {
-      "name": "resizeDistribution",
-      "docs": [
-        "Resize old accounts for backwards compatibility."
-      ],
-      "discriminator": [
-        60,
-        253,
-        192,
-        57,
-        144,
-        54,
-        12,
-        221
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "distributionAccount",
-          "writable": true
-        },
-        {
-          "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "updateDistribution",
       "docs": [
         "Update royalty amount for creators a distribution account."

@@ -120,38 +120,6 @@
       ]
     },
     {
-      "name": "resize_distribution",
-      "docs": [
-        "Resize old accounts for backwards compatibility."
-      ],
-      "discriminator": [
-        60,
-        253,
-        192,
-        57,
-        144,
-        54,
-        12,
-        221
-      ],
-      "accounts": [
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "distribution_account",
-          "writable": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "update_distribution",
       "docs": [
         "Update royalty amount for creators a distribution account."
