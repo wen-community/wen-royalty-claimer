@@ -18,7 +18,7 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
     const distributionProgram = getDistributionProgram(provider);
     const distributionAccount = new PublicKey(distribution);
 
-    const creatorPubkey = DISTRIBUTION_PROGRAM_ID;
+    const creatorPubkey = provider.publicKey;
     const mintPubkey = DISTRIBUTION_PROGRAM_ID;
 
     if (!creatorPubkey) return undefined;
