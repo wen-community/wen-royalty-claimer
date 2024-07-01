@@ -60,8 +60,7 @@ export const fetchEligibleDistributionForUser = async (provider: Provider, mint:
         amount: 0
     };
     const { address: distributionAddress, account: distributionAccount } = await fetchDistributionAccount(provider, collection.toString());
-    // const creator = provider.publicKey?.toString();
-    const creator = "5AdNuK2RfGxKhk7gGQZxN6S4a5LNRUn8Q1ry6fSWg85n";
+    const creator = provider.publicKey?.toString();
 
     if (!creator) return {
         distributionAddress,
