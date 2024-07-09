@@ -1,15 +1,33 @@
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey, SystemProgram } from "@solana/web3.js";
 import { getDistributionAccount, getDistributionProgram, getWnsToken } from "./core";
 import { AnchorProvider, BN, Provider } from "@coral-xyz/anchor";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { DISTRIBUTION_PROGRAM_ID, RPC_URL } from "../../constants";
-import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { AnchorWallet, useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
+import { useMemo } from "react";
+
+const DEBUG_WALLET = undefined;
+
+export function useDebugAnchorWallet(): AnchorWallet | undefined {
+    const { signTransaction, signAllTransactions } = useWallet();
+    return useMemo(
+        () =>
+            DEBUG_WALLET && signTransaction && signAllTransactions
+                ? { publicKey: new PublicKey(DEBUG_WALLET), signTransaction, signAllTransactions }
+                : undefined,
+        [signTransaction, signAllTransactions]
+    );
+}
 
 export const useProvider = () => {
     const connection = new Connection(RPC_URL);
     const wallet = useAnchorWallet();
-    if (!wallet) return undefined;
-    const provider = new AnchorProvider(connection, wallet, {});
+    const debugWallet = useDebugAnchorWallet();
+
+    const WALLET = debugWallet ?? wallet;
+    if (!WALLET) return undefined;
+
+    const provider = new AnchorProvider(connection, WALLET, {});
 
     return provider;
 }
@@ -19,12 +37,12 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
     const distributionAccount = new PublicKey(distribution);
 
     const creatorPubkey = provider.publicKey;
-    const mintPubkey = DISTRIBUTION_PROGRAM_ID;
+    const mintPubkey = SystemProgram.programId;
 
     if (!creatorPubkey) return undefined;
 
-    let creatorTokenAccount = creatorPubkey;
-    let programTokenAccount = distributionAccount;
+    let creatorTokenAccount = DISTRIBUTION_PROGRAM_ID;
+    let programTokenAccount = DISTRIBUTION_PROGRAM_ID;
 
     const ix = await distributionProgram.methods
         .claimDistribution()
