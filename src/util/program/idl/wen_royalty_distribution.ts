@@ -69,6 +69,10 @@ export type WenRoyaltyDistribution = {
         },
         {
           "name": "tokenProgram"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
         }
       ],
       "args": []

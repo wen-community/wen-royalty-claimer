@@ -53,6 +53,7 @@ export const buildClaimDistributionIx = async (provider: Provider, distribution:
             creatorTokenAccount: creatorTokenAccount,
             distributionTokenAccount: programTokenAccount,
             tokenProgram: TOKEN_2022_PROGRAM_ID,
+            systemProgram: SystemProgram.programId
         })
         .instruction();
 
